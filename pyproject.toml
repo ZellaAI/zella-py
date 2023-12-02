@@ -1,0 +1,22 @@
+[project]
+name = "zella"
+version = "0.0.1"
+authors = [
+  { name="Team Zella", email="dev@zella.ai" }
+]
+description = "Python SDK for accessing Zella AI for building AI apps"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/ZellaAI/zella-py"
+Issues = "https://github.com/ZellaAI/zella-py/issues"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
