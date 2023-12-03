@@ -28,3 +28,15 @@ class ZellaAI():
     def post(self, path, data, headers={}, options={}):
         response = self.client.post(path, json=data, headers=headers, **options)
         return json.loads(response.text, object_hook=lambda d: SimpleNamespace(**d))
+
+    def stream(self, request_type, path, data, headers={}, options={}):
+        with self.client.stream(request_type, path, json=data, headers=headers, **options) as r:
+            for line in r.iter_lines():
+                if line == '[DONE]':
+                    return
+                if line and not line.startswith(':'):
+                    fieldname, _, value = line.partition(":")
+                    if value.startswith(" "):
+                        value = value[1:]
+                    if fieldname == "data" and value != "[DONE]":
+                        yield json.loads(value, object_hook=lambda d: SimpleNamespace(**d))
