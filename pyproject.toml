@@ -1,6 +1,6 @@
 [project]
 name = "zella"
-version = "0.0.1"
+version = "0.0.2"
 authors = [
   { name="Team Zella", email="dev@zella.ai" }
 ]
@@ -18,5 +18,8 @@ Homepage = "https://github.com/ZellaAI/zella-py"
 Issues = "https://github.com/ZellaAI/zella-py/issues"
 
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = [
+  "setuptools>=61.0",
+  "httpx>=0.25"
+]
 build-backend = "setuptools.build_meta"
