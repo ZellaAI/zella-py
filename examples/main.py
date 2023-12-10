@@ -61,13 +61,13 @@ def chat_completion_with_streaming():
 
 def retrieve_prompt():
     prompt_id = "test-prompt"
-    prompt = zella_ai.prompt.retrieve(prompt_id)
+    prompt = zella_ai.prompt.get(prompt_id)
     assert prompt.data.id == prompt_id
 
 def retrieve_prompt_by_variant_id():
     prompt_id = "test-prompt"
     prompt_variant_id = "test-variant-2"
-    prompt = zella_ai.prompt.retrieve(prompt_id, prompt_variant_id=prompt_variant_id)
+    prompt = zella_ai.prompt.get(prompt_id, prompt_variant_id=prompt_variant_id)
     assert prompt.data.id == prompt_id
     assert prompt.data.variant_id == prompt_variant_id
 

@@ -3,7 +3,7 @@ class Prompt:
         self.client = client
         pass
 
-    def retrieve(self, prompt_id, user=None, **kwargs):
+    def get(self, prompt_id, user=None, **kwargs):
         """
         Retrieve a prompt from the server.
 
