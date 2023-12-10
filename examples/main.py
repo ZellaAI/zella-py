@@ -59,7 +59,20 @@ def chat_completion_with_streaming():
     for chunk in stream:
         assert chunk.id
 
+def retrieve_prompt():
+    prompt_id = "test-prompt"
+    prompt = zella_ai.prompt.retrieve(prompt_id)
+    assert prompt.data.id == prompt_id
+
+def retrieve_prompt_by_variant_id():
+    prompt_id = "test-prompt"
+    prompt_variant_id = "test-variant-2"
+    prompt = zella_ai.prompt.retrieve(prompt_id, prompt_variant_id=prompt_variant_id)
+    assert prompt.data.id == prompt_id
+    assert prompt.data.variant_id == prompt_variant_id
 
 if __name__ == "__main__":
     chat_completion()
     chat_completion_with_streaming()
+    retrieve_prompt()
+    retrieve_prompt_by_variant_id()
