@@ -17,6 +17,8 @@ class ZellaAI():
 
         self.chat           = resources.Chat(self)
         self.completions    = resources.Completions(self)
+        self.prompt         = resources.Prompt(self)
+        self.embedding      = resources.Embedding(self)
 
         self.client         = httpx.Client(
             headers= {
