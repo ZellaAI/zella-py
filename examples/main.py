@@ -1,7 +1,7 @@
 import os
 import sys
 
-sys.path.append('./src')
+sys.path.append('../src')
 
 
 from zella import ZellaAI
@@ -86,9 +86,20 @@ def embed():
     response = zella_ai.embedding.embed(user, model, query, response)
     assert response.status.type == "ok"
 
+def log():
+    action = "chat.completion"
+    request = {"inputs":{"question":"What is my name?","context":"My name is Clara and I live in Berkeley."}}
+    response = {"score":0.933128833770752,"start":11,"end":16,"answer":"Clara"}
+    meta = {"model": "deepset/roberta-base-squad2"}
+    response = zella_ai.logger.log(action, request, response)
+
+    assert response.status.type == "ok"
+
+
 if __name__ == "__main__":
     chat_completion()
     chat_completion_with_streaming()
     retrieve_prompt()
     retrieve_prompt_by_variant_id()
     embed()
+    log()

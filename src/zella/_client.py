@@ -19,6 +19,7 @@ class ZellaAI():
         self.completions    = resources.Completions(self)
         self.prompt         = resources.Prompt(self)
         self.embedding      = resources.Embedding(self)
+        self.logger         = resources.Logger(self)
 
         self.client         = httpx.Client(
             headers= {
