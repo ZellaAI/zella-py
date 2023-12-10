@@ -71,8 +71,24 @@ def retrieve_prompt_by_variant_id():
     assert prompt.data.id == prompt_id
     assert prompt.data.variant_id == prompt_variant_id
 
+def embed():
+    user = "2312re3r33e33"
+    model = {
+        "platform": "openai",
+        "name": "text-embedding-ada-002"
+    }
+    query = {
+        "input": "Hello World!",
+    }
+    response = {
+        "format": "float"
+    }
+    response = zella_ai.embedding.embed(user, model, query, response)
+    assert response.status.type == "ok"
+
 if __name__ == "__main__":
     chat_completion()
     chat_completion_with_streaming()
     retrieve_prompt()
     retrieve_prompt_by_variant_id()
+    embed()
