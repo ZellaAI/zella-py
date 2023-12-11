@@ -91,7 +91,7 @@ def log():
     request = {"inputs":{"question":"What is my name?","context":"My name is Clara and I live in Berkeley."}}
     response = {"score":0.933128833770752,"start":11,"end":16,"answer":"Clara"}
     meta = {"model": "deepset/roberta-base-squad2"}
-    response = zella_ai.logger.log(action, request, response)
+    response = zella_ai.logger.log(action, request, response, "huggingface", "deepset/roberta-base-squad2", meta=meta)
 
     assert response.status.type == "ok"
 
