@@ -14,19 +14,19 @@ class ZellaAI():
         self.api_key = api_key
         self.base_url = base_url or BASE_URL
 
+        self.chat                   = resources.Chat(self)
+        self.completions            = resources.Completions(self)
+        self.prompt                 = resources.Prompt(self)
+        self.embedding              = resources.Embedding(self)
+        self.logger                 = resources.Logger(self)
+        self.langchain_callback     = resources.LangChainCallback(self)
 
-        self.chat           = resources.Chat(self)
-        self.completions    = resources.Completions(self)
-        self.prompt         = resources.Prompt(self)
-        self.embedding      = resources.Embedding(self)
-        self.logger         = resources.Logger(self)
 
         self.client         = httpx.Client(
             headers= {
                 'Authorization': f'Bearer {self.api_key}'
             }
         )
-
 
     def post(self, path, data, headers={}, options={}):
         response = self.client.post(path, json=data, headers=headers, **options)
