@@ -88,8 +88,8 @@ def embed():
 
 def log():
     action = "chat.completion"
-    request = {"inputs":{"question":"What is my name?","context":"My name is Clara and I live in Berkeley."}}
-    response = {"score":0.933128833770752,"start":11,"end":16,"answer":"Clara"}
+    request = {"inputs": {"past_user_inputs": ["Which movie is the best ?"], "generated_responses": ["It is Die Hard for sure."], "text":"Can you explain why ?"}}
+    response = {"generated_text":"It's the best movie ever.","conversation":{"past_user_inputs":["Which movie is the best ?","Can you explain why ?"],"generated_responses":["It is Die Hard for sure.","It's the best movie ever."]}}
     meta = {"model": "deepset/roberta-base-squad2"}
     response = zella_ai.logger.log(action, request, response, "huggingface", "deepset/roberta-base-squad2", meta=meta)
 
