@@ -1,6 +1,11 @@
+from .log_consumer import LogConsumer
+
+
 class Logger:
-    def __init__(self, client):
+    def __init__(self, client, batch_logging):
         self.client = client
+        self.log_consumer = LogConsumer(client)
+        self.batch_logging = batch_logging
         pass
 
     def log(self, action, request, response, platform, model, **kwargs):
@@ -18,7 +23,7 @@ class Logger:
                     - prompt_tokens (int): Prompt tokens.
                     - completion_tokens (int): Completion tokens.
                     - total_tokens (int): Total tokens.
-                - meta (dict, optional): Dictionary of optional meta data to be logged.
+                - meta (dict, optional): Dictionary of optional metadata to be logged.
 
         """
         log_request = {
@@ -34,6 +39,10 @@ class Logger:
             log_request["meta"] = kwargs.get("meta")
         if kwargs.get("token_usage"):
             log_request["token_usage"] = kwargs.get("token_usage")
-        
-        data = self.client.post(self.client.base_url + "/log", log_request)
-        return data
+
+        if self.batch_logging:
+            self.log_consumer.consume(log_request)
+            return
+        else:
+            data = self.client.post(self.client.base_url + "/log", log_request)
+            return data
