@@ -4,7 +4,7 @@ from .log_consumer import LogConsumer
 class Logger:
     def __init__(self, client, batch_logging):
         self.client = client
-        self.log_consumer = LogConsumer(client)
+        self.log_consumer = LogConsumer(client) if batch_logging else None
         self.batch_logging = batch_logging
         pass
 
