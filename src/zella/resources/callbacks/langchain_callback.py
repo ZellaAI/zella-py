@@ -1,3 +1,4 @@
+import logging
 from typing import Any, Dict, List, Optional
 from uuid import UUID
 
@@ -14,6 +15,7 @@ class LangChainCallback(BaseCallbackHandler):
     def __init__(self, client):
         self.client = client
         self.runs = {}
+        self.log = logging.getLogger("zella_ai")
 
     def on_llm_start(
         self,
@@ -28,8 +30,8 @@ class LangChainCallback(BaseCallbackHandler):
     ) -> Any:
         try:
             self.runs[run_id] = {}
-            self.runs[run_id]["action"] = "chat.completions"
-            self.runs[run_id]["request"] = prompts
+            self.runs[run_id]["action"] = "chat.completion"
+            self.runs[run_id]["request"] = {"inputs": prompts}
             invocation_params = kwargs.get("invocation_params")
             if invocation_params["_type"] == "openai":
                 self.runs[run_id]["platform"] = "openai"
@@ -46,7 +48,8 @@ class LangChainCallback(BaseCallbackHandler):
             self.runs[run_id]["meta"] = {
                 "source": "langchain-callback"
             }
-        except Exception:
+        except Exception as e:
+            self.log.error("Error in on_llm_start: %s", e)
             return
 
     def on_llm_end(
@@ -67,7 +70,12 @@ class LangChainCallback(BaseCallbackHandler):
                 for output in generation:
                     resp["generated_texts"].append(output.text)
             self.runs[run_id]["response"] = resp
+
+            if response.llm_output is not None and "token_usage" in response.llm_output:
+                self.runs[run_id]["token_usage"] = response.llm_output["token_usage"]
+
             self.client.logger.log(**self.runs[run_id])
             del self.runs[run_id]
-        except Exception:
+        except Exception as e:
+            self.log.error("Error in on_llm_end: %s", e)
             return

@@ -96,6 +96,29 @@ def log():
     assert response.status.type == "ok"
 
 
+def langchain():
+    from langchain.llms import OpenAI, HuggingFaceHub
+    from langchain.chat_models import ChatOpenAI
+    from langchain.schema import HumanMessage
+    from langchain.chains import LLMChain
+    from langchain.prompts import PromptTemplate
+    llm = OpenAI()
+    prompt = PromptTemplate.from_template("1 + {number} = ")
+    chain = LLMChain(llm=llm, prompt=prompt, callbacks=[zella_ai.langchain_callback])
+    chain.run(number=2)
+
+    OpenAI().invoke(input="Why should we care about climate change?", config={"callbacks": [zella_ai.langchain_callback]})
+
+    chat = ChatOpenAI(max_tokens=25, streaming=True, callbacks=[zella_ai.langchain_callback])
+    chat([HumanMessage(content="Tell me a joke")])
+
+    repo_id = "google/flan-t5-xxl"
+    llm = HuggingFaceHub(
+        repo_id=repo_id, model_kwargs={"temperature": 0.5, "max_length": 64}
+    )
+    llm.invoke(input="Why should we care about climate change?", config={"callbacks": [zella_ai.langchain_callback]})
+
+
 if __name__ == "__main__":
     chat_completion()
     chat_completion_with_streaming()
@@ -103,3 +126,4 @@ if __name__ == "__main__":
     retrieve_prompt_by_variant_id()
     embed()
     log()
+    langchain()
