@@ -3,9 +3,7 @@ import sys
 
 sys.path.append('../src')
 
-
 from zella import ZellaAI
-
 
 api_key = os.environ.get('ZELLA_API_KEY')
 zella_ai = ZellaAI(api_key)
@@ -34,6 +32,23 @@ def chat_completion():
 
     assert response.status.type == "ok"
 
+
+def completion():
+    user = "2312re3r33e33"
+    model = {
+        "platform": "openai",
+        "name": "gpt-3.5-turbo"
+    }
+    query = {
+        "content": "What is 3+4?"
+    }
+    response = {
+    }
+    response = zella_ai.completions.create(user, model, query, response)
+    print(response)
+    assert response.status.type == "ok"
+
+
 def chat_completion_with_streaming():
     user = "2312re3r33e33"
     model = {
@@ -59,10 +74,12 @@ def chat_completion_with_streaming():
     for chunk in stream:
         assert chunk.id
 
+
 def retrieve_prompt():
     prompt_id = "test-prompt"
     prompt = zella_ai.prompt.get(prompt_id)
     assert prompt.data.id == prompt_id
+
 
 def retrieve_prompt_by_variant_id():
     prompt_id = "test-prompt"
@@ -70,6 +87,7 @@ def retrieve_prompt_by_variant_id():
     prompt = zella_ai.prompt.get(prompt_id, prompt_variant_id=prompt_variant_id)
     assert prompt.data.id == prompt_id
     assert prompt.data.variant_id == prompt_variant_id
+
 
 def embed():
     user = "2312re3r33e33"
@@ -85,6 +103,7 @@ def embed():
     }
     response = zella_ai.embedding.embed(user, model, query, response)
     assert response.status.type == "ok"
+
 
 def log():
     action = "chat.completion"
@@ -127,3 +146,4 @@ if __name__ == "__main__":
     embed()
     log()
     langchain()
+    completion()
