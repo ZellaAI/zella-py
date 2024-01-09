@@ -1,31 +1,50 @@
+from typing import Any, Dict
+
+
 class Embedding:
-    def __init__(self, client):
+    """
+        A class to handle the creation of embeddings requests.
+        """
+
+    def __init__(self, client: Any) -> None:
+        """
+        Initialize the Embedding class with a client.
+
+        :param client: Client object to handle requests.
+        """
         self.client = client
-        pass
 
-    def embed(self, user, model, query, response, options={}):
+    def _build_url(self, endpoint: str) -> str:
         """
-        Embeds the given query and response using the specified model.
+        Build the complete URL for an API request.
 
-        Args:
-            user (str): The user identifier.
-            model (dict): The model identifier.
-            query (dict): The query to be embedded.
-            response (dict): The response format and configurations.
-            options (dict, optional): Additional options for embedding. Defaults to {}.
-
-        Returns:
-            dict: The embedded data.
-
+        :param endpoint: The endpoint of the API.
+        :return: The complete URL.
         """
-        data = self.client.post(
-            self.client.base_url + "/embeddings",
-            {
-                "user": user,
-                "model": model,
-                "query": query,
-                "response": response,
-                "options": options
-            }
-        )
-        return data
+        return self.client.base_url + endpoint
+
+    def create(
+            self,
+            model: str,
+            query: Dict = None,
+            user: str = None,
+            conversation_id: str = None,
+            message_chain_id: str = None,
+            response: Dict = {},
+            options: Dict = {}
+    ) -> Any:
+        """
+        Create an embedding request.
+
+        :param user: User associated with the request.
+        :param conversation_id: Identifier for the conversation.
+        :param message_chain_id: Identifier for the message chain.
+        :param model: The model used for completion.
+        :param query: The query for the request, if prompt is not present.
+        :param response: The response parameters.
+        :param options: Additional options for the request.
+        :return: The response from the API.
+        """
+        request = {k: v for k, v in locals().items() if v is not None and k != 'self'}
+
+        return self.client.post(self._build_url("/embeddings"), request)
