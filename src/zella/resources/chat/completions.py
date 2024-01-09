@@ -3,12 +3,12 @@ from typing import Any, Dict, Optional
 
 class Completions:
     """
-    A class to handle the creation of completion requests.
+    A class to handle the creation of chat completion requests.
     """
 
     def __init__(self, client: Any) -> None:
         """
-        Initialize the Completions class with a client.
+        Initialize the Chat Completions class with a client.
 
         :param client: Client object to handle requests.
         """
@@ -26,8 +26,8 @@ class Completions:
     def create(
             self,
             model: str,
-            prompt: str = None,
-            query: str = None,
+            prompt: Dict = None,
+            query: Dict = None,
             user: str = None,
             conversation_id: str = None,
             message_chain_id: str = None,
@@ -35,7 +35,7 @@ class Completions:
             options: Dict = {}
     ) -> Any:
         """
-        Create a completion request.
+        Create a chat completion request.
 
         :param user: User associated with the request.
         :param conversation_id: Identifier for the conversation.
