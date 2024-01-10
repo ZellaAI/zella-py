@@ -3,7 +3,7 @@ import json
 
 from types import SimpleNamespace
 
-from src.version import VERSION
+from .version import VERSION
 from .config import BASE_URL
 from . import resources
 

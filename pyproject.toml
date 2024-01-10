@@ -1,6 +1,6 @@
 [project]
 name = "zella"
-version = {attr = "src.version.VERSION"}
+dynamic = ["version"]
 authors = [
   { name="Team Zella", email="dev@zella.ai" }
 ]
@@ -12,10 +12,12 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
-
 dependencies = [
   "httpx>=0.25"
 ]
+
+[tool.setuptools.dynamic]
+version = {attr = "zella.version.VERSION"}
 
 [project.urls]
 Homepage = "https://github.com/ZellaAI/zella-py"
