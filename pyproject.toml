@@ -1,6 +1,6 @@
 [project]
 name = "zella"
-version = "0.0.2"
+version = {attr = "src.version.VERSION"}
 authors = [
   { name="Team Zella", email="dev@zella.ai" }
 ]
@@ -11,6 +11,10 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
+]
+
+dependencies = [
+  "httpx>=0.25"
 ]
 
 [project.urls]
