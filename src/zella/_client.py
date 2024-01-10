@@ -9,7 +9,7 @@ from . import resources
 
 
 class ZellaAI:
-    def __init__(self, api_key=None, base_url=None, batch_logging=False, timeout=300):
+    def __init__(self, api_key=None, base_url=None, batch_logging=False, timeout=600):
         if api_key is None:
             raise ValueError("api_key is required")
         self.api_key = api_key
