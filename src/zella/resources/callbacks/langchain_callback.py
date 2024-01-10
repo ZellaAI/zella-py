@@ -6,8 +6,8 @@ try:
     from langchain_core.callbacks.base import BaseCallbackHandler
     from langchain_core.outputs import LLMResult
 except ImportError:
-    BaseCallbackHandler = Any
-    LLMResult = Any
+    BaseCallbackHandler = object
+    LLMResult = object
 
 
 class LangChainCallback(BaseCallbackHandler):
