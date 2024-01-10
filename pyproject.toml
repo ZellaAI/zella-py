@@ -22,8 +22,5 @@ Homepage = "https://github.com/ZellaAI/zella-py"
 Issues = "https://github.com/ZellaAI/zella-py/issues"
 
 [build-system]
-requires = [
-  "setuptools>=61.0",
-  "httpx>=0.25"
-]
+requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
