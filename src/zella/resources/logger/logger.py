@@ -8,16 +8,14 @@ class Logger:
         self.batch_logging = batch_logging
         pass
 
-    def log(self, action, request, response, platform, model, **kwargs):
+    def log(self, messages, output, model, **kwargs):
         """
         Log a request to Zella.
 
         Args:
-            action (str): Action type of the request [Eg, chat.completions, embedding].
-            request (str): Request sent to the platform.
-            response (str): Response received to the platform.
-            platform (str): Platform name.
-            model (str): Model name.
+            messages (str): Request sent to the platform.
+            output (str): Response received to the platform.
+            model (str): Model details.
             **kwargs: Additional arguments for prompt retrieval. Valid arguments are:
                 - token_usage (dict, optional): Dictionary of token usage details.
                     - prompt_tokens (int): Prompt tokens.
@@ -27,14 +25,16 @@ class Logger:
 
         """
         log_request = {
-            "action": action,
-            "request": request,
-            "response": response,
-            "platform": platform,
-            "model": model,
+            "input": messages,
+            "output": output,
+            "model": model
         }
         if kwargs.get("user"):
             log_request["user"] = kwargs.get("user")
+        if kwargs.get("tags"):
+            log_request["tags"] = kwargs.get("tags")
+        if kwargs.get("message_chain_id"):
+            log_request["message_chain_id"] = kwargs.get("message_chain_id")
         if kwargs.get("meta"):
             log_request["meta"] = kwargs.get("meta")
         if kwargs.get("token_usage"):
